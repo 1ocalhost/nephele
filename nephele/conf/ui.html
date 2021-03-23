@@ -1,0 +1,21 @@
+<textarea id="text" style="width: 900px; height: 550px;"></textarea>
+<button onclick="doConvert(this)">Convert</button>
+<script>
+    function doConvert(elBtn) {
+        elText = document.getElementById('text');
+        elBtn.disabled = true;
+        elText.disabled = true;
+        fetch(location.pathname, {
+            method: 'POST',
+            body: elText.value,
+        })
+        .then(res => {
+            return res.text();
+        })
+        .then(text => {
+            elText.value = text;
+            elBtn.disabled = false;
+            elText.disabled = false;
+        });
+    }
+</script>

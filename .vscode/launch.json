@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "App",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder}/api/main.py",
+            "cwd": "${workspaceFolder}/api",
+            "env": {
+                "PYTHONPYCACHEPREFIX": "${env:temp}/.pycache",
+                "NEPHELE_DEBUG_MODE": "1"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Current File",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

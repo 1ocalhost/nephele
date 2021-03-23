@@ -1,0 +1,18 @@
+{
+    "feed": {
+        "feeds": [
+            "http://127.0.0.1/feed.txt"
+        ],
+        "words": [
+            "IPLC"
+        ],
+        "code": {
+            "admin": [
+                "admin"
+            ],
+            "guest": [
+                "guest"
+            ]
+        }
+    }
+}
