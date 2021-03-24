@@ -12,7 +12,10 @@ def b64_decode(data):
         return None
 
     d = data.replace('_', '/').replace('-', '+')
-    return base64.b64decode(d.strip() + '==').decode()
+    try:
+        return base64.b64decode(d.strip() + '==').decode()
+    except Exception:
+        return
 
 
 def b64_encode(data, url_safe=False, padding=True):
@@ -134,6 +137,9 @@ def list_to_block(list_):
 def decode_uri(options, uri):
     scheme, data = uri.split('://')
     data = b64_decode(data)
+    if data is None:
+        return
+
     decoder = encoding_provider(options, scheme)[0]
     return scheme, decoder(data)
 
@@ -162,7 +168,7 @@ def encoding_provider(options, scheme):
 def filter_feed(feed, filter_, options):
     servers = block_to_list(feed)
     servers = map(partial(decode_uri, options), servers)
-    servers = [s for s in servers if filter_(s)]
+    servers = [s for s in servers if s and filter_(s)]
     servers = map(partial(encode_uri, options), servers)
     return list_to_block(servers)
 
