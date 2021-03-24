@@ -13,7 +13,7 @@ conf:
 import requests
 from flask import request
 from nephele.utils import Nephele
-from .feed_utils import GROUP_NAME, filter_by_words
+from .feed_utils import make_group_name, filter_by_words
 
 nephele = Nephele(__file__)
 
@@ -29,15 +29,18 @@ def check_if_quan():
 
 
 def make_options():
+    result = {}
+
     ua = check_if_quan()
     if ua:
-        return {
+        result = {
             'variant': 'quan',
             'cipher': 'chacha20-ietf-poly1305',
-            'group': GROUP_NAME,
             'user_agent': ua,
         }
-    return {}
+
+    result.update(group=make_group_name())
+    return result
 
 
 def handle_req():

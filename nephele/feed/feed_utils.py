@@ -1,3 +1,4 @@
+import time
 import json
 import base64
 from urllib.parse import urlparse, parse_qs, urlencode
@@ -5,6 +6,13 @@ from functools import partial
 from nephele.utils import AttrDict, APP_NAME
 
 GROUP_NAME = APP_NAME.capitalize()
+
+
+def make_group_name():
+    now_ts = int(time.time() * 1000)
+    now_ts_bytes = now_ts.to_bytes(6, 'big')
+    now_tag = base64.b64encode(now_ts_bytes).decode()
+    return f'{GROUP_NAME}_{now_tag}'
 
 
 def b64_decode(data):
@@ -182,7 +190,7 @@ def filter_by_words(feed, words, options={}):
             label = obj['ps']
         elif scheme == 'ssr':
             label = obj.query['remarks']
-            obj.query['group'] = GROUP_NAME
+            obj.query['group'] = options.get('group', GROUP_NAME)
 
         for word in words:
             if word in label:
